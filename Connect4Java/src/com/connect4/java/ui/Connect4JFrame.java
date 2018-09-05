@@ -30,6 +30,9 @@ public class Connect4JFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        mainPanel = new javax.swing.JPanel();
+        connect4Board1 = new com.connect4.java.ui.Connect4Board();
+        statusBar = new javax.swing.JLabel();
         mainMenu = new javax.swing.JMenuBar();
         gameMenu = new javax.swing.JMenu();
         newGame2Player = new javax.swing.JMenuItem();
@@ -39,6 +42,33 @@ public class Connect4JFrame extends javax.swing.JFrame {
         aboutMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        statusBar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        statusBar.setText("Select the amount of players");
+        statusBar.setAlignmentX(0.5F);
+        statusBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(statusBar, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(mainPanelLayout.createSequentialGroup()
+                    .addComponent(connect4Board1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                .addContainerGap(351, Short.MAX_VALUE)
+                .addComponent(statusBar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(mainPanelLayout.createSequentialGroup()
+                    .addComponent(connect4Board1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 33, Short.MAX_VALUE)))
+        );
 
         gameMenu.setMnemonic('G');
         gameMenu.setText("Game");
@@ -55,6 +85,11 @@ public class Connect4JFrame extends javax.swing.JFrame {
 
         newGame1Player.setMnemonic('1');
         newGame1Player.setText("New 1 player");
+        newGame1Player.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newGame1PlayerActionPerformed(evt);
+            }
+        });
         gameMenu.add(newGame1Player);
         gameMenu.add(jSeparator1);
 
@@ -88,11 +123,11 @@ public class Connect4JFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -100,6 +135,7 @@ public class Connect4JFrame extends javax.swing.JFrame {
 
     private void newGame2PlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGame2PlayerActionPerformed
         // TODO add your handling code here:
+        this.statusBar.setText("Two Players Game");
     }//GEN-LAST:event_newGame2PlayerActionPerformed
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
@@ -117,6 +153,11 @@ public class Connect4JFrame extends javax.swing.JFrame {
                 aboutDialog.setLocationRelativeTo(this);
                 aboutDialog.setVisible(true);
     }//GEN-LAST:event_aboutMenuMenuSelected
+
+    private void newGame1PlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGame1PlayerActionPerformed
+        // TODO add your handling code here:
+        this.statusBar.setText("One Player Game");
+    }//GEN-LAST:event_newGame1PlayerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,11 +196,14 @@ public class Connect4JFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu aboutMenu;
+    private com.connect4.java.ui.Connect4Board connect4Board1;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu gameMenu;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JMenuBar mainMenu;
+    private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem newGame1Player;
     private javax.swing.JMenuItem newGame2Player;
+    private javax.swing.JLabel statusBar;
     // End of variables declaration//GEN-END:variables
 }
