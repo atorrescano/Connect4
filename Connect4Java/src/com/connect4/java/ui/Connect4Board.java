@@ -16,9 +16,11 @@ import javax.swing.JLabel;
  */
 public class Connect4Board extends javax.swing.JPanel {
 
-    private Connect4Cell[] turnBand;
-    
+    private Connect4Cell[] turnBand;    
     private Connect4Cell[][] board;
+    
+    private boolean redTurn=true;
+    private CellStatus turn = CellStatus.REDOUT;
     
     /**
      * Creates new form Connect4Board
@@ -34,7 +36,7 @@ public class Connect4Board extends javax.swing.JPanel {
         
         turnBand = new Connect4Cell[7];
         for(int i=0;i<7;i++){
-            turnBand[i]=new Connect4Cell(CellStatus.EMPTYOUT);
+            turnBand[i]=new Connect4Cell(CellStatus.EMPTYOUT,true);
             this.add(turnBand[i]);
         }
         
@@ -49,6 +51,17 @@ public class Connect4Board extends javax.swing.JPanel {
             }
         } 
         
+    }
+    
+    public void setTurn(boolean redTurn){
+        if(redTurn){
+            this.redTurn = true;
+            this.turn = CellStatus.REDOUT;
+        }else{
+            this.redTurn = false;
+            this.turn = CellStatus.PURPLEOUT;
+        }
+        for(int i=0;i<7;turnBand[i++].setTurnSwitch(this.turn));
     }
 
     /**

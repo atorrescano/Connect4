@@ -19,8 +19,21 @@ public class Connect4JFrame extends javax.swing.JFrame {
      */
     public Connect4JFrame() {
         initComponents();
+        connect4Board1.setVisible(false);
     }
 
+    public boolean play(boolean redTurn, boolean pcPlayer){
+        if(!pcPlayer){
+            statusBar.setText("Red Turn");
+            connect4Board1.setTurn(true);   
+        }
+        else{
+            statusBar.setText("Purple Turn");
+            connect4Board1.setTurn(false);   
+        }
+        return true;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -136,6 +149,8 @@ public class Connect4JFrame extends javax.swing.JFrame {
     private void newGame2PlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGame2PlayerActionPerformed
         // TODO add your handling code here:
         this.statusBar.setText("Two Players Game");
+        connect4Board1.setVisible(true);
+        play(true,false);
     }//GEN-LAST:event_newGame2PlayerActionPerformed
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
@@ -157,6 +172,8 @@ public class Connect4JFrame extends javax.swing.JFrame {
     private void newGame1PlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGame1PlayerActionPerformed
         // TODO add your handling code here:
         this.statusBar.setText("One Player Game");
+        connect4Board1.setVisible(true);
+        play(true,true);
     }//GEN-LAST:event_newGame1PlayerActionPerformed
 
     /**
