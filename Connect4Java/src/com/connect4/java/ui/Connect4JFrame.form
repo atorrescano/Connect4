@@ -119,6 +119,10 @@
       </Layout>
       <SubComponents>
         <Container class="com.connect4.java.ui.Connect4Board" name="connect4Board1">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Connect4Board(this)"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+          </AuxValues>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
             <Property name="columns" type="int" value="7"/>

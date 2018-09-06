@@ -5,6 +5,8 @@
  */
 package com.connect4.java.ui;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JTextArea;
 
@@ -22,16 +24,22 @@ public class Connect4JFrame extends javax.swing.JFrame {
         connect4Board1.setVisible(false);
     }
 
-    public boolean play(boolean redTurn, boolean pcPlayer){
-        if(!pcPlayer){
+    public boolean turn(boolean redTurn){
+        //Evaluate winner
+        //Evaluate available options
+        
+        if(redTurn){
             statusBar.setText("Red Turn");
-            connect4Board1.setTurn(true);   
-        }
-        else{
+            connect4Board1.setTurn(true);            
+        } else{
             statusBar.setText("Purple Turn");
             connect4Board1.setTurn(false);   
-        }
+        }                
         return true;
+    }
+    
+    public void play(boolean redTurn, boolean pcPlayer){
+        turn(redTurn);
     }
     
     /**
@@ -44,7 +52,7 @@ public class Connect4JFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        connect4Board1 = new com.connect4.java.ui.Connect4Board();
+        connect4Board1 = new Connect4Board(this);
         statusBar = new javax.swing.JLabel();
         mainMenu = new javax.swing.JMenuBar();
         gameMenu = new javax.swing.JMenu();
@@ -176,6 +184,10 @@ public class Connect4JFrame extends javax.swing.JFrame {
         play(true,true);
     }//GEN-LAST:event_newGame1PlayerActionPerformed
 
+    public void setMessage(String message){
+        this.statusBar.setText(message);
+    }
+    
     /**
      * @param args the command line arguments
      */
