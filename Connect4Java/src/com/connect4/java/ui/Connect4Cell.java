@@ -100,6 +100,10 @@ public class Connect4Cell extends JLabel implements MouseListener {
         setCell(status,false);
     }
     
+    public CellStatus getCellStatus(){
+        return this.status;
+    }
+    
     public void play(CellStatus playedStatus){
         this.isPlayed = true;
         this.playedStatus = getTurnIn(playedStatus);

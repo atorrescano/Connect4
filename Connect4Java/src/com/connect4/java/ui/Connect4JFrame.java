@@ -25,9 +25,41 @@ public class Connect4JFrame extends javax.swing.JFrame {
         connect4Board1.setVisible(false);
     }
 
-    public boolean turn(boolean redTurn){
+    private boolean pcPlayer;
+    private boolean onePlayer;
+    
+    public boolean turn(boolean redTurn){        
         //Evaluate winner
+        CellStatus winner = connect4Board1.getWinner();
+        
+        if(winner!=null){
+            if(winner==CellStatus.REDIN){
+                statusBar.setText("Red Player is the Winner!");
+                if(JOptionPane.showConfirmDialog(this, "Do you want to play again?", "RED PLAYER WON!", JOptionPane.OK_OPTION)==JOptionPane.NO_OPTION){
+                    this.setVisible(false);
+                    this.dispose();
+                }
+                connect4Board1.reset();
+                play(false,pcPlayer);
+                return true;
+            }
+            else{
+                statusBar.setText("Purple Player is the Winner!");
+                if(JOptionPane.showConfirmDialog(this, "Do you want to play again?", "PURPLE PLAYER WON!", JOptionPane.OK_OPTION)==JOptionPane.NO_OPTION){
+                    this.setVisible(false);
+                    this.dispose();                    
+                }
+                connect4Board1.reset();
+                play(true,pcPlayer);
+                return true;
+            }
+        }
+        
         //Evaluate available options
+        if(!connect4Board1.isAnyOptionAvailable()){
+            statusBar.setText("We have a TIE! Play again");
+            return false;
+        }
         
         if(redTurn){
             statusBar.setText("Red Turn");
@@ -35,12 +67,14 @@ public class Connect4JFrame extends javax.swing.JFrame {
         } else{
             statusBar.setText("Purple Turn");
             connect4Board1.setTurn(false);   
-        }                
+        }                     
         return true;
     }
     
     public void play(boolean redTurn, boolean pcPlayer){
-        turn(redTurn);
+        if(!turn(redTurn)){
+            this.statusBar.setText("DONE");            
+        }
     }
     
     /**
@@ -168,6 +202,7 @@ public class Connect4JFrame extends javax.swing.JFrame {
         }
         this.statusBar.setText("Two Players Game");
         connect4Board1.setVisible(true);
+        onePlayer=pcPlayer=false;
         play(true,false);
     }//GEN-LAST:event_newGame2PlayerActionPerformed
 
@@ -200,6 +235,7 @@ public class Connect4JFrame extends javax.swing.JFrame {
         }
         this.statusBar.setText("One Player Game");
         connect4Board1.setVisible(true);
+        onePlayer=pcPlayer=true;
         play(true,true);
     }//GEN-LAST:event_newGame1PlayerActionPerformed
 

@@ -52,8 +52,6 @@ public class Connect4Board extends javax.swing.JPanel {
             this.add(turnBand[i]);
         }
         
-        //turnBand[0].setCell(CellStatus.PURPLEOUT);
-        
         board=new Connect4Cell[6][];
         for(int x=0;x<6;x++){
             board[x]=new Connect4Cell[7];
@@ -103,8 +101,148 @@ public class Connect4Board extends javax.swing.JPanel {
         return true;
     }
     
+    public CellStatus getWinner(){
+        int countNotPlayed=0;
+        for(int y=5;y>=0;y--){
+            countNotPlayed=0;
+            for(int x=6;x>=0;x--){
+                if(!board[y][x].isPlayed()){
+                    countNotPlayed++;
+                    continue;
+                }
+                
+                CellStatus evaluating = board[y][x].getCellStatus();
+                
+                if(evaluateMasks(y, x, evaluating)){
+                   return evaluating; 
+                }
+            }
+            if(countNotPlayed==7){
+                break;
+            }
+        } 
+        return null;
+    }
     
+    private boolean evaluateMasks(int y, int x, CellStatus evaluating){
+        //skip downwards
+        if(y>2){
+            //upwards
+            if(evaluating==board[y-3][x].getCellStatus()&&
+                    evaluating==board[y-2][x].getCellStatus()&& 
+                    evaluating==board[y-1][x].getCellStatus() &&
+                    evaluating==board[y][x].getCellStatus()){
+                return true;
+            }
+            //skip diagonals left and left
+            if(x<3){
+                //right diagonal
+                if(evaluating==board[y-3][x+3].getCellStatus()&&
+                        evaluating==board[y-2][x+2].getCellStatus()&& 
+                        evaluating==board[y-1][x+1].getCellStatus() &&
+                        evaluating==board[y][x].getCellStatus()){
+                    return true;
+                }
+                //right
+                if(evaluating==board[y][x+3].getCellStatus()&&
+                        evaluating==board[y][x+2].getCellStatus()&& 
+                        evaluating==board[y][x+1].getCellStatus() &&
+                        evaluating==board[y][x].getCellStatus()){
+                    return true;
+                }                
+            } else if(x==3){ //all
+                //right diagonal
+                if(evaluating==board[y-3][x+3].getCellStatus()&&
+                        evaluating==board[y-2][x+2].getCellStatus()&& 
+                        evaluating==board[y-1][x+1].getCellStatus() &&
+                        evaluating==board[y][x].getCellStatus()){
+                    return true;
+                }
+                //right
+                if(evaluating==board[y][x+3].getCellStatus()&&
+                        evaluating==board[y][x+2].getCellStatus()&& 
+                        evaluating==board[y][x+1].getCellStatus() &&
+                        evaluating==board[y][x].getCellStatus()){
+                    return true;
+                }                
+                //left diagonal
+                if(evaluating==board[y-3][x-3].getCellStatus()&&
+                        evaluating==board[y-2][x-2].getCellStatus()&& 
+                        evaluating==board[y-1][x-1].getCellStatus() &&
+                        evaluating==board[y][x].getCellStatus()){
+                    return true;
+                }
+                //left
+                if(evaluating==board[y][x-3].getCellStatus()&&
+                        evaluating==board[y][x-2].getCellStatus()&& 
+                        evaluating==board[y][x-1].getCellStatus() &&
+                        evaluating==board[y][x].getCellStatus()){
+                    return true;
+                }                                                
+            }             
+            else{ //skip diagonals right and right
+                //left diagonal
+                if(evaluating==board[y-3][x-3].getCellStatus()&&
+                        evaluating==board[y-2][x-2].getCellStatus()&& 
+                        evaluating==board[y-1][x-1].getCellStatus() &&
+                        evaluating==board[y][x].getCellStatus()){
+                    return true;
+                }
+                //left
+                if(evaluating==board[y][x-3].getCellStatus()&&
+                        evaluating==board[y][x-2].getCellStatus()&& 
+                        evaluating==board[y][x-1].getCellStatus() &&
+                        evaluating==board[y][x].getCellStatus()){
+                    return true;
+                }                                
+            }
+        } else{ //skip upwards and downwards, only laterals
+            if(x<3){ //skip left
+                //right
+                if(evaluating==board[y][x+3].getCellStatus()&&
+                        evaluating==board[y][x+2].getCellStatus()&& 
+                        evaluating==board[y][x+1].getCellStatus() &&
+                        evaluating==board[y][x].getCellStatus()){
+                    return true;
+                }                
+            } else if(x==3){ //left and right
+                //right
+                if(evaluating==board[y][x+3].getCellStatus()&&
+                        evaluating==board[y][x+2].getCellStatus()&& 
+                        evaluating==board[y][x+1].getCellStatus() &&
+                        evaluating==board[y][x].getCellStatus()){
+                    return true;
+                }                
+                //left
+                if(evaluating==board[y][x-3].getCellStatus()&&
+                        evaluating==board[y][x-2].getCellStatus()&& 
+                        evaluating==board[y][x-1].getCellStatus() &&
+                        evaluating==board[y][x].getCellStatus()){
+                    return true;
+                }                                                
+            } 
+            else{ //skip right
+                //left
+                if(evaluating==board[y][x-3].getCellStatus()&&
+                        evaluating==board[y][x-2].getCellStatus()&& 
+                        evaluating==board[y][x-1].getCellStatus() &&
+                        evaluating==board[y][x].getCellStatus()){
+                    return true;
+                }                                                
+            }            
+        }
+        return false;
+    }
     
+    public boolean isAnyOptionAvailable(){
+        for(int i=0;i<7;i++){
+            if(!board[0][i].isPlayed()){
+                return true;
+            }
+        }
+        return false;
+    }
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
