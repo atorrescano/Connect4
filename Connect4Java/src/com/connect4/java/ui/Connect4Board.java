@@ -41,6 +41,11 @@ public class Connect4Board extends javax.swing.JPanel {
         this.setMaximumSize(new Dimension(350,350));
         this.setMinimumSize(new Dimension(350,350));
         
+        reset();
+    }
+    
+    public void reset(){
+        this.removeAll();
         turnBand = new Connect4Cell[7];
         for(int i=0;i<7;i++){
             turnBand[i]=new Connect4Cell(this,i,CellStatus.EMPTYOUT,true);
@@ -59,7 +64,6 @@ public class Connect4Board extends javax.swing.JPanel {
                 this.add(board[x][y]);
             }
         } 
-        
     }
     
     public void setTurn(boolean redTurn){

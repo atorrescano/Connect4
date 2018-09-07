@@ -8,6 +8,7 @@ package com.connect4.java.ui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 /**
@@ -156,6 +157,15 @@ public class Connect4JFrame extends javax.swing.JFrame {
 
     private void newGame2PlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGame2PlayerActionPerformed
         // TODO add your handling code here:
+        int startNewGame=0;
+        if(connect4Board1.isVisible()){
+            startNewGame=JOptionPane.showConfirmDialog(this, "There is a game in progress. Are you sure you want to start a new one?", "New 2 Player Game", JOptionPane.YES_NO_OPTION);
+            if(startNewGame==JOptionPane.YES_OPTION){
+                connect4Board1.reset();
+            } else {
+                return;
+            }            
+        }
         this.statusBar.setText("Two Players Game");
         connect4Board1.setVisible(true);
         play(true,false);
@@ -179,6 +189,15 @@ public class Connect4JFrame extends javax.swing.JFrame {
 
     private void newGame1PlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGame1PlayerActionPerformed
         // TODO add your handling code here:
+        int startNewGame=0;
+        if(connect4Board1.isVisible()){
+            startNewGame=JOptionPane.showConfirmDialog(this, "There is a game in progress. Are you sure you want to start a new one?", "New 1 Player Game", JOptionPane.YES_NO_OPTION);
+            if(startNewGame==JOptionPane.YES_OPTION){
+                connect4Board1.reset();
+            } else {
+                return;
+            }            
+        }
         this.statusBar.setText("One Player Game");
         connect4Board1.setVisible(true);
         play(true,true);
