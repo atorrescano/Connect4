@@ -24,6 +24,8 @@ public class Connect4Board extends javax.swing.JPanel {
     
     private Connect4JFrame parent;
     
+    private boolean isPCTurn;
+    
     public CellStatus getTurn(){
         return this.turn;
     }
@@ -64,16 +66,28 @@ public class Connect4Board extends javax.swing.JPanel {
         } 
     }
     
-    public void setTurn(boolean redTurn){
+    public void setTurn(boolean redTurn) throws InterruptedException{
         if(redTurn){
             this.redTurn = true;
             this.turn = CellStatus.REDOUT;
         }else{
             this.redTurn = false;
             this.turn = CellStatus.PURPLEOUT;
+            if(isPCTurn){
+                play(getPCTurn(0));
+            }
         }
     }
 
+    public int getPCTurn(int level){
+        int column = 0;
+        do {
+            column=((int)(Math.random()*10))%7;
+        } while(board[0][column].isPlayed());
+        
+        return column;
+    }
+    
     public void setMessage(String message){
         parent.setMessage(message);
     }
@@ -241,6 +255,14 @@ public class Connect4Board extends javax.swing.JPanel {
             }
         }
         return false;
+    }
+    
+    public void setPCTurn(boolean isPCTurn){
+        this.isPCTurn = isPCTurn;
+    }
+    
+    public boolean isPCTurn(){
+        return isPCTurn;
     }
      
     /**

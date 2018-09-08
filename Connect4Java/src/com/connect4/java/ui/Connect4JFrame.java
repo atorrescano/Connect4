@@ -24,9 +24,12 @@ public class Connect4JFrame extends javax.swing.JFrame {
         initComponents();
         connect4Board1.setVisible(false);
     }
-
+    
     private boolean pcPlayer;
-    private boolean onePlayer;
+    
+    public boolean isPcPlayer(){
+        return pcPlayer;
+    }
     
     public boolean turn(boolean redTurn){        
         //Evaluate winner
@@ -63,9 +66,16 @@ public class Connect4JFrame extends javax.swing.JFrame {
         
         if(redTurn){
             statusBar.setText("Red Turn");
+            if(pcPlayer){
+                connect4Board1.setPCTurn(false);
+            }
             connect4Board1.setTurn(true);            
         } else{
             statusBar.setText("Purple Turn");
+            if(pcPlayer){
+                statusBar.setText("Purple Turn (PC)");
+                connect4Board1.setPCTurn(true);
+            }
             connect4Board1.setTurn(false);   
         }                     
         return true;
@@ -202,7 +212,7 @@ public class Connect4JFrame extends javax.swing.JFrame {
         }
         this.statusBar.setText("Two Players Game");
         connect4Board1.setVisible(true);
-        onePlayer=pcPlayer=false;
+        pcPlayer=false;
         play(true,false);
     }//GEN-LAST:event_newGame2PlayerActionPerformed
 
@@ -235,7 +245,7 @@ public class Connect4JFrame extends javax.swing.JFrame {
         }
         this.statusBar.setText("One Player Game");
         connect4Board1.setVisible(true);
-        onePlayer=pcPlayer=true;
+        pcPlayer=true;
         play(true,true);
     }//GEN-LAST:event_newGame1PlayerActionPerformed
 

@@ -116,6 +116,9 @@ public class Connect4Cell extends JLabel implements MouseListener {
     
     @Override
     public void mouseClicked(MouseEvent e) {
+        if(parent.isPCTurn()){
+            return;
+        }
         try {
             if(!parent.play(this.myColumn)){
                 parent.setMessage("Not a valid play, please try again!");
@@ -137,6 +140,9 @@ public class Connect4Cell extends JLabel implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        if(parent.isPCTurn()){
+            return;
+        }
         if(isTurnBand){
             setCell(parent.getTurn());
         }
@@ -147,6 +153,9 @@ public class Connect4Cell extends JLabel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+        if(parent.isPCTurn()){
+            return;
+        }
         if(isTurnBand){
             setCell(CellStatus.EMPTYOUT);
         }
