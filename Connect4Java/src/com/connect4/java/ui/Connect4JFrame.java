@@ -5,6 +5,7 @@
  */
 package com.connect4.java.ui;
 
+import com.connect4.java.CellStatus;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
@@ -31,7 +32,7 @@ public class Connect4JFrame extends javax.swing.JFrame {
         return pcPlayer;
     }
     
-    public boolean turn(boolean redTurn){        
+    public boolean turn(boolean redTurn){  
         //Evaluate winner
         CellStatus winner = connect4Board1.getWinner();
         

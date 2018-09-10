@@ -5,6 +5,7 @@
  */
 package com.connect4.java.ui;
 
+import com.connect4.java.CellStatus;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
@@ -98,6 +99,11 @@ public class Connect4Cell extends JLabel implements MouseListener {
     
     public void setCell(CellStatus status){
         setCell(status,false);
+    }
+    
+    public void setCellStatusPlayed(CellStatus status){
+        this.isPlayed = true;
+        this.status=status;
     }
     
     public CellStatus getCellStatus(){

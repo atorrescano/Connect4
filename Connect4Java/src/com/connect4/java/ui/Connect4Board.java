@@ -5,9 +5,14 @@
  */
 package com.connect4.java.ui;
 
+import com.connect4.java.CellStatus;
+import com.connect4.java.BoardCandidate;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.List;
+import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 
 /**
@@ -66,7 +71,7 @@ public class Connect4Board extends javax.swing.JPanel {
         } 
     }
     
-    public void setTurn(boolean redTurn) throws InterruptedException{
+    public void setTurn(boolean redTurn){
         if(redTurn){
             this.redTurn = true;
             this.turn = CellStatus.REDOUT;
@@ -74,16 +79,43 @@ public class Connect4Board extends javax.swing.JPanel {
             this.redTurn = false;
             this.turn = CellStatus.PURPLEOUT;
             if(isPCTurn){
-                play(getPCTurn(0));
+                try {
+                    play(getPCTurn(1));
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Connect4Board.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
 
     public int getPCTurn(int level){
+        if(level==0){
+            return randomPCThrow();
+        }
+        return minMaxPCThrow(level);
+    }        
+    
+    public int minMaxPCThrow(int level){
+        int column=0;
+        TreeSet<BoardCandidate> decisionTree = new TreeSet<BoardCandidate>();
+        
+        for(int i=0;i<7;i++){
+            if(!board[0][i].isPlayed()){
+                decisionTree.add(new BoardCandidate(board,i,Connect4Cell.getTurnIn(turn)));
+            }
+        }
+                
+        System.out.println("Decided:"+decisionTree.first().getColumn());
+        return decisionTree.first().getColumn();
+    }
+    
+    public int randomPCThrow(){
+        int maxTries=14;
         int column = 0;
         do {
+            maxTries--;
             column=((int)(Math.random()*10))%7;
-        } while(board[0][column].isPlayed());
+        } while(board[0][column].isPlayed()&&maxTries>0);
         
         return column;
     }
@@ -247,7 +279,7 @@ public class Connect4Board extends javax.swing.JPanel {
         }
         return false;
     }
-    
+        
     public boolean isAnyOptionAvailable(){
         for(int i=0;i<7;i++){
             if(!board[0][i].isPlayed()){
