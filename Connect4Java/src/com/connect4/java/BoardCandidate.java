@@ -9,7 +9,7 @@ import com.connect4.java.ui.Connect4Cell;
 
 /**
  *
- * @author Aaron
+ * @author Aaron Torrescano
  */
 public class BoardCandidate implements Comparable{
     
@@ -67,7 +67,7 @@ public class BoardCandidate implements Comparable{
             }
             consecutivesTotal[4]+=consecutives[4];
             consecutivesTotal[5]+=consecutives[5]*3;
-            consecutivesTotal[6]+=consecutives[6]*8;
+            consecutivesTotal[6]+=consecutives[6]*9;
             consecutivesTotal[7]+=consecutives[7]*11;
                             
             }

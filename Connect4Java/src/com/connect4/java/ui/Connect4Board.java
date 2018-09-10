@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Aaron
+ * @author Aaron Torrescano
  */
 public class Connect4Board extends javax.swing.JPanel {
 

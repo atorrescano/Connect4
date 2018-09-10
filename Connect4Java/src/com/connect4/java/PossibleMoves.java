@@ -7,7 +7,7 @@ package com.connect4.java;
 
 /**
  *
- * @author Aaron
+ * @author Aaron Torrescano
  */
 public enum PossibleMoves {
     UP,RIGHT,LEFT,DIAGONAL_RIGHT,DIAGONAL_LEFT

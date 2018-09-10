@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 
 /**
  *
- * @author Aaron
+ * @author Aaron Torrescano
  */
 public class Connect4JFrame extends javax.swing.JFrame {
 

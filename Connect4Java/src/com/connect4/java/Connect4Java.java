@@ -22,7 +22,7 @@ import javax.swing.KeyStroke;
 
 /**
  *
- * @author Aaron
+ * @author Aaron Torrescano
  */
 public class Connect4Java {
 

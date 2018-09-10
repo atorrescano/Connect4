@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Aaron
+ * @author Aaron Torrescano
  */
 public class Connect4Cell extends JLabel implements MouseListener {
     private CellStatus status;
@@ -29,9 +29,10 @@ public class Connect4Cell extends JLabel implements MouseListener {
     private int myColumn;
     
     public Connect4Cell(Connect4Board parent, int myColumn){        
-        super(new ImageIcon("D:/CODE/Connect4/Connect4Java/src/images/Empty.png"));
+        super();
         this.parent = parent;
         status = CellStatus.EMPTY;
+        this.setIcon(status.getImage());
         isTurnBand=false;
         this.myColumn = myColumn;
         this.setMinimumSize(new Dimension(50,50));
@@ -44,26 +45,7 @@ public class Connect4Cell extends JLabel implements MouseListener {
     public Connect4Cell(Connect4Board parent, int myColumn,CellStatus status){
         this(parent,myColumn);
         this.status = status;
-        switch(this.status){
-            case EMPTY:
-                this.setIcon(new ImageIcon("D:/CODE/Connect4/Connect4Java/src/images/Empty.png"));
-                break;            
-            case EMPTYOUT:
-                this.setIcon(new ImageIcon("D:/CODE/Connect4/Connect4Java/src/images/EmptyOut.png"));
-                break;            
-            case REDIN:
-                this.setIcon(new ImageIcon("D:/CODE/Connect4/Connect4Java/src/images/RedChipIn.png"));
-                break;            
-            case PURPLEIN:
-                this.setIcon(new ImageIcon("D:/CODE/Connect4/Connect4Java/src/images/PurpleChipIn.png"));
-                break;            
-            case REDOUT:
-                this.setIcon(new ImageIcon("D:/CODE/Connect4/Connect4Java/src/images/RedChipOut.png"));
-                break;            
-            case PURPLEOUT:
-                this.setIcon(new ImageIcon("D:/CODE/Connect4/Connect4Java/src/images/PurpleChipOut.png"));
-                break;            
-        }
+        this.setIcon(status.getImage());
     }
 
     public Connect4Cell(Connect4Board parent, int myColumn,CellStatus status, boolean isTurnBand){
@@ -73,26 +55,7 @@ public class Connect4Cell extends JLabel implements MouseListener {
     
     public void setCell(CellStatus status, boolean opaque){
         this.status = status;
-        switch(this.status){
-            case EMPTY:
-                this.setIcon(new ImageIcon("D:/CODE/Connect4/Connect4Java/src/images/Empty.png"));
-                break;            
-            case EMPTYOUT:
-                this.setIcon(new ImageIcon("D:/CODE/Connect4/Connect4Java/src/images/EmptyOut.png"));
-                break;            
-            case REDIN:
-                this.setIcon(new ImageIcon("D:/CODE/Connect4/Connect4Java/src/images/RedChipIn.png"));
-                break;            
-            case PURPLEIN:
-                this.setIcon(new ImageIcon("D:/CODE/Connect4/Connect4Java/src/images/PurpleChipIn.png"));
-                break;            
-            case REDOUT:
-                this.setIcon(new ImageIcon("D:/CODE/Connect4/Connect4Java/src/images/RedChipOut.png"));
-                break;            
-            case PURPLEOUT:
-                this.setIcon(new ImageIcon("D:/CODE/Connect4/Connect4Java/src/images/PurpleChipOut.png"));
-                break;            
-        }        
+        this.setIcon(status.getImage());
         this.setOpaque(opaque);    
         this.paint(this.getGraphics());
         }
