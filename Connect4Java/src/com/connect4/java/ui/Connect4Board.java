@@ -21,6 +21,8 @@ import javax.swing.JLabel;
  */
 public class Connect4Board extends javax.swing.JPanel {
 
+    private final Logger logger = Logger.getLogger("com.connect4.java");
+
     private Connect4Cell[] turnBand;    
     private Connect4Cell[][] board;
     
@@ -104,9 +106,9 @@ public class Connect4Board extends javax.swing.JPanel {
                 decisionTree.add(new BoardCandidate(board,i,Connect4Cell.getTurnIn(turn)));
             }
         }
-                
-        System.out.println("Decided:"+decisionTree.first().getColumn());
-        return decisionTree.first().getColumn();
+         
+        logger.info("Decided:"+decisionTree.last().getColumn());
+        return decisionTree.last().getColumn();
     }
     
     public int randomPCThrow(){

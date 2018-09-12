@@ -6,32 +6,56 @@
 package com.connect4.java.ui;
 
 import com.connect4.java.CellStatus;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Filter;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
-/**
+/**Game of connect 4 including 2 players or 1 player against the computer.
  *
  * @author Aaron Torrescano
  */
 public class Connect4JFrame extends javax.swing.JFrame {
 
+    private final Logger logger = Logger.getLogger("com.connect4.java");
+    
     /**
      * Creates new form Connect4JFrame
      */
     public Connect4JFrame() {
         initComponents();
-        connect4Board1.setVisible(false);
+        connect4Board1.setVisible(false);     
+        try {
+            logger.addHandler(new FileHandler("Connect4.log",false));
+        } catch (IOException ex) {
+            Logger.getLogger(Connect4JFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(Connect4JFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private boolean pcPlayer;
     
+    /**Gets info on whether the other player is a computer or not
+     *
+     * @return true if the purple player is the computer.
+     */
     public boolean isPcPlayer(){
         return pcPlayer;
     }
     
+    /**It is a turn on the board.
+     *
+     *@param redTurn indicates whether it is a red chip (always a person) or a 
+     * purple chip turn (it could be a person or the PC)
+     *
+     * @return false if there are no more turns on the board. true, otherwise.
+     */
     public boolean turn(boolean redTurn){  
         //Evaluate winner
         CellStatus winner = connect4Board1.getWinner();

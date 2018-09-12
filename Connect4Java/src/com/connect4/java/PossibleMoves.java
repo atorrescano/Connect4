@@ -6,7 +6,7 @@
 package com.connect4.java;
 
 /**
- *
+ * This is an enum of the possible winning directions for a game of connect 4.
  * @author Aaron Torrescano
  */
 public enum PossibleMoves {
