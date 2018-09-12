@@ -106,6 +106,13 @@ public class Connect4JFrame extends javax.swing.JFrame {
         return true;
     }
     
+    /**
+     * Initiates the game.
+     * 
+     * @param redTurn Turns are switched when it is played again. True, when it 
+     * starts with a red chip
+     * @param pcPlayer whether the purple player is another person or the computer
+     */
     public void play(boolean redTurn, boolean pcPlayer){
         if(!turn(redTurn)){
             this.statusBar.setText("DONE");            
@@ -223,7 +230,7 @@ public class Connect4JFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void newGame2PlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGame2PlayerActionPerformed
         // TODO add your handling code here:
         int startNewGame=0;
@@ -274,8 +281,13 @@ public class Connect4JFrame extends javax.swing.JFrame {
         play(true,true);
     }//GEN-LAST:event_newGame1PlayerActionPerformed
 
+    /**Sets a message on the status bar
+     *
+     * @param message the message to be set.
+     */
     public void setMessage(String message){
         this.statusBar.setText(message);
+        this.statusBar.repaint();
     }
     
     /**

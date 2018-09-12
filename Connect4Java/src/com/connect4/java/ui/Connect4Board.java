@@ -9,13 +9,11 @@ import com.connect4.java.CellStatus;
 import com.connect4.java.BoardCandidate;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.util.List;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
 
-/**
+/**Class that represents a connect 4 board and its UI.
  *
  * @author Aaron Torrescano
  */
@@ -33,12 +31,18 @@ public class Connect4Board extends javax.swing.JPanel {
     
     private boolean isPCTurn;
     
+    /**Method that indicates the cell status in turn
+     *
+     * @return the CellStatus that is in turn.
+     */
     public CellStatus getTurn(){
         return this.turn;
     }
             
     /**
      * Creates new form Connect4Board
+     * 
+     * @param parent the owner of the JFrame.
      */
     public Connect4Board(Connect4JFrame parent) {
         initComponents();
@@ -53,6 +57,9 @@ public class Connect4Board extends javax.swing.JPanel {
         reset();
     }
     
+    /**This method removes all the contained components and it creates an empty 
+     * new board of Connect4Cells.
+     */
     public void reset(){
         this.removeAll();
         turnBand = new Connect4Cell[7];
@@ -66,13 +73,15 @@ public class Connect4Board extends javax.swing.JPanel {
             board[x]=new Connect4Cell[7];
             for(int y=0;y<7;y++){
                 board[x][y]=new Connect4Cell(this,y,CellStatus.EMPTY);
-                //board[x][y].setIcon(null);
-                //board[x][y].setText(x+","+y);
                 this.add(board[x][y]);
             }
         } 
     }
-    
+
+    /**Sets the current turn. It manages the level of the PC.
+     *
+     * @param redTurn true if it is a redTurn, false if it is a purple turn
+     */
     public void setTurn(boolean redTurn){
         if(redTurn){
             this.redTurn = true;
@@ -90,6 +99,13 @@ public class Connect4Board extends javax.swing.JPanel {
         }
     }
 
+    /**Method that gets the column that the computer decides to play at
+     *
+     *@param level 0 for completely Math.random, 1 or higher is the level of 
+     * tree depth that it is constructed for the minmax algorithm
+     * 
+     * @return a value between 0-6 of the column to throw at
+     */
     public int getPCTurn(int level){
         if(level==0){
             return randomPCThrow();
@@ -97,10 +113,16 @@ public class Connect4Board extends javax.swing.JPanel {
         return minMaxPCThrow(level);
     }        
     
+    /**The MinMax calculation algorithm
+     *
+     *@param level 1 or higher, it represents the depth of the decision tree
+     * @return a value between 0-6 of the column to throw at
+     */
     public int minMaxPCThrow(int level){
         int column=0;
         TreeSet<BoardCandidate> decisionTree = new TreeSet<BoardCandidate>();
-        
+
+        //Creates a BoardCandidate per column.
         for(int i=0;i<7;i++){
             if(!board[0][i].isPlayed()){
                 decisionTree.add(new BoardCandidate(board,i,Connect4Cell.getTurnIn(turn)));
@@ -108,9 +130,15 @@ public class Connect4Board extends javax.swing.JPanel {
         }
          
         logger.info("Decided:"+decisionTree.last().getColumn());
+        
+        //returns the Max graded option column
         return decisionTree.last().getColumn();
     }
     
+    /**Select a Math.random option
+     * 
+     * @return a value between 0-6 of the column to throw at
+     */
     public int randomPCThrow(){
         int maxTries=14;
         int column = 0;
@@ -122,10 +150,20 @@ public class Connect4Board extends javax.swing.JPanel {
         return column;
     }
     
+    /**Stub method to update status bar
+     *
+     * @param message message to be set at the status bar
+     */
     public void setMessage(String message){
         parent.setMessage(message);
     }
     
+    /**Animated throw at a column in the board.
+     * 
+     * @param playedColumn the column that is being selected.
+     * @return true if the action was successful, false if the column is full.
+     * @throws java.lang.InterruptedException in case the sleep of the animation is interrupted
+     */
     public boolean play(int playedColumn) throws InterruptedException{
         if(board[0][playedColumn].isPlayed()){
             return false;
@@ -149,6 +187,10 @@ public class Connect4Board extends javax.swing.JPanel {
         return true;
     }
     
+    /**Method that evaluates if the current board has a winner.
+     *
+     *@return the winner of the match
+     */
     public CellStatus getWinner(){
         int countNotPlayed=0;
         for(int y=5;y>=0;y--){
@@ -282,6 +324,10 @@ public class Connect4Board extends javax.swing.JPanel {
         return false;
     }
         
+    /**Verifies if there is any option to throw available at the board.
+     *
+     * @return true if there is at least one option, false otherwise.
+     */
     public boolean isAnyOptionAvailable(){
         for(int i=0;i<7;i++){
             if(!board[0][i].isPlayed()){
@@ -291,10 +337,18 @@ public class Connect4Board extends javax.swing.JPanel {
         return false;
     }
     
+    /**Sets the value for the computer taking a turn.
+     * 
+     * @param isPCTurn whether it is the computers turn or not
+     */
     public void setPCTurn(boolean isPCTurn){
         this.isPCTurn = isPCTurn;
     }
     
+    /**Gets the value of whether it is the computers turn, or not.
+     * 
+     * @return true if it is the computers turn, false otherwise
+     */
     public boolean isPCTurn(){
         return isPCTurn;
     }
