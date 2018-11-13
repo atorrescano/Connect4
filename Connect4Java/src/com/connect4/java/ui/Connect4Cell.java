@@ -203,6 +203,17 @@ public class Connect4Cell extends JLabel implements MouseListener {
         
         return CellStatus.PURPLEIN;
     }
+    
+    @Override
+    public String toString(){
+        if(status==CellStatus.PURPLEIN){
+            return "P";
+        }else if(status == CellStatus.REDIN){
+            return "R";
+        }else{
+            return "E";
+        }            
+    }
 
     /**Method that transforms a chip from being out to be inside the board.
      *

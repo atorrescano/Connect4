@@ -70,6 +70,7 @@ public class BoardCandidate implements Comparable{
     protected int getStatusGrade(CellStatus player){
         int grade=0;
         int opponentGrade=0;
+        int maxRow=0;
         
         int[] consecutivesTotal=new int[]{0,0,0,0,0,0,0,0};
         int[] consecutives={0,0,0,0,0,0,0,0};
@@ -77,6 +78,7 @@ public class BoardCandidate implements Comparable{
         int countNotPlayed=0;
         for(int y=5;y>=0;y--){
             countNotPlayed=0;
+            maxRow++;
             for(int x=6;x>=0;x--){
                 //if the cell is not played on that row, count it but continue
                 if(!board[y][x].isPlayed()){
@@ -84,88 +86,83 @@ public class BoardCandidate implements Comparable{
                     continue;
                 }
             
-            consecutives = countConsecutives(y,x,player);
-            
-            if(board[y][x].getCellStatus()==player){                                        
-                consecutivesTotal[0]+=consecutives[0]*2;
-                consecutivesTotal[1]+=consecutives[1]*4;
-                consecutivesTotal[2]+=consecutives[2]*7;
-                consecutivesTotal[3]+=consecutives[3]*15;
-            }
-            consecutivesTotal[4]+=consecutives[4];
-            consecutivesTotal[5]+=consecutives[5]*3;
-            consecutivesTotal[6]+=consecutives[6]*9;
-            consecutivesTotal[7]+=consecutives[7]*11;
-                            
+                consecutives = countConsecutives(y,x,player);
+
+                if(board[y][x].getCellStatus()==player){                                        
+                    consecutivesTotal[0]+=consecutives[0];
+                    consecutivesTotal[1]+=consecutives[1];
+                    consecutivesTotal[2]+=consecutives[2];
+                    consecutivesTotal[3]+=consecutives[3];
+                } 
+                /*else{
+                    consecutivesTotal[4]+=consecutives[4];
+                    consecutivesTotal[5]+=consecutives[5];
+                    consecutivesTotal[6]+=consecutives[6];
+                    consecutivesTotal[7]+=consecutives[7];
+                } */                           
             }
             if(countNotPlayed==7){
                 break;
             }
         }         
         
-        grade = consecutivesTotal[7]+consecutivesTotal[6]+consecutivesTotal[5]+consecutivesTotal[4]+consecutivesTotal[3]+consecutivesTotal[2]+consecutivesTotal[1]+consecutivesTotal[0];        
-        logger.info("Col:"+column+",Grade:"+grade);
+        grade = /*consecutivesTotal[7]*90+
+                consecutivesTotal[6]*80+
+                consecutivesTotal[5]*5+
+                consecutivesTotal[4]*1+*/
+                consecutivesTotal[3]*100+
+                consecutivesTotal[2]*20+
+                consecutivesTotal[1]*10+
+                consecutivesTotal[0]*2;
+        //logger.info("Col:"+column+",Grade:"+grade);
+        //return ((int)grade/maxRow);
         return grade;
     }
     
     private int countConsecitivesCase(int y, int x, CellStatus player,PossibleMoves move){
         int localCount=0;
+        CellStatus opponent = player==CellStatus.REDIN?CellStatus.PURPLEIN:CellStatus.REDIN;
         
         switch(move){
             case UP:
-                if(player==board[y-1][x].getCellStatus()){
-                    localCount++;
-                    if(player==board[y-2][x].getCellStatus()){
-                        localCount++;
-                        if(player==board[y-3][x].getCellStatus()){
-                            localCount++;
-                        }            
-                    }
-                }
+                if(opponent==board[y-1][x].getCellStatus()){break;}
+                if(player==board[y-1][x].getCellStatus()){localCount++;}
+                if(opponent==board[y-2][x].getCellStatus()){break;}
+                if(player==board[y-2][x].getCellStatus()){localCount++;}
+                if(opponent==board[y-3][x].getCellStatus()){break;}
+                if(player==board[y-3][x].getCellStatus()){localCount++;}            
                 break;
             case RIGHT:
-                if(player==board[y][x+1].getCellStatus()){
-                    localCount++;
-                    if(player==board[y][x+2].getCellStatus()){
-                        localCount++;
-                        if(player==board[y][x+3].getCellStatus()){
-                            localCount++;
-                        }            
-                    }
-                }                
+                if(opponent==board[y][x+1].getCellStatus()){break;}
+                if(player==board[y][x+1].getCellStatus()){localCount++;}                
+                if(opponent==board[y][x+2].getCellStatus()){break;}
+                if(player==board[y][x+2].getCellStatus()){localCount++;}
+                if(opponent==board[y][x+3].getCellStatus()){break;}
+                if(player==board[y][x+3].getCellStatus()){localCount++;}            
                 break;
             case LEFT:
-                if(player==board[y][x-1].getCellStatus()){
-                    localCount++;
-                    if(player==board[y][x-2].getCellStatus()){
-                        localCount++;
-                        if(player==board[y][x-3].getCellStatus()){
-                            localCount++;
-                        }                            
-                    }
-                }                
+                if(opponent==board[y][x-1].getCellStatus()){break;}
+                if(player==board[y][x-1].getCellStatus()){localCount++;}                
+                if(opponent==board[y][x-2].getCellStatus()){break;}
+                if(player==board[y][x-2].getCellStatus()){localCount++;}
+                if(opponent==board[y][x-3].getCellStatus()){break;}
+                if(player==board[y][x-3].getCellStatus()){localCount++;}                            
                 break;
             case DIAGONAL_RIGHT:
-                if(player==board[y-1][x+1].getCellStatus()){
-                    localCount++;
-                    if(player==board[y-2][x+2].getCellStatus()){
-                        localCount++;
-                        if(player==board[y-3][x+3].getCellStatus()){
-                            localCount++;
-                        }            
-                    }
-                }                
+                if(opponent==board[y-1][x+1].getCellStatus()){break;}
+                if(player==board[y-1][x+1].getCellStatus()){localCount++;}                
+                if(opponent==board[y-2][x+2].getCellStatus()){break;}
+                if(player==board[y-2][x+2].getCellStatus()){localCount++;}
+                if(opponent==board[y-3][x+3].getCellStatus()){break;}
+                if(player==board[y-3][x+3].getCellStatus()){localCount++;}            
                 break;
             case DIAGONAL_LEFT:
-                if(player==board[y-1][x-1].getCellStatus()){
-                    localCount++;
-                    if(player==board[y-2][x-2].getCellStatus()){
-                        localCount++;
-                        if(player==board[y-3][x-3].getCellStatus()){
-                            localCount++;
-                        }            
-                    }
-                }                
+                if(opponent==board[y-1][x-1].getCellStatus()){break;}
+                if(player==board[y-1][x-1].getCellStatus()){localCount++;}                
+                if(opponent==board[y-2][x-2].getCellStatus()){break;}
+                if(player==board[y-2][x-2].getCellStatus()){localCount++;}
+                if(opponent==board[y-3][x-3].getCellStatus()){break;}
+                if(player==board[y-3][x-3].getCellStatus()){localCount++;}            
                 break;
             default:
                 localCount=-1;
@@ -269,6 +266,33 @@ public class BoardCandidate implements Comparable{
      */
     public int getGrade(){
         return grade;
+    }
+    
+    /**Return whether or not a particular column on top is played already on the current status
+     *
+     * @param column the column to be tested
+     * @return true if it is played, false otherwise
+     */
+    public boolean isColumnPlayed(int column){
+        return board[0][column].isPlayed();
+    }
+    
+    public Connect4Cell[][] getBoard(){
+        return board;
+    }
+    
+    @Override
+    public String toString(){
+        String temp="Player:"+player+"\tColumn:"+column+"\tGrade:"+grade;
+        
+        for(int x=0;x<6;x++){
+            temp+="\n";
+            for(int y=0;y<7;y++){
+                temp+=board[x][y]+"\t";                
+            }
+        }    
+    
+        return temp;
     }
     
     /**

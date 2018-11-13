@@ -7,6 +7,7 @@ package com.connect4.java.ui;
 
 import com.connect4.java.CellStatus;
 import com.connect4.java.BoardCandidate;
+import com.connect4.java.DecisionTreeNode;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.TreeSet;
@@ -91,7 +92,7 @@ public class Connect4Board extends javax.swing.JPanel {
             this.turn = CellStatus.PURPLEOUT;
             if(isPCTurn){
                 try {
-                    play(getPCTurn(1));
+                    play(getPCTurn(2));
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Connect4Board.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -120,19 +121,49 @@ public class Connect4Board extends javax.swing.JPanel {
      */
     public int minMaxPCThrow(int level){
         int column=0;
-        TreeSet<BoardCandidate> decisionTree = new TreeSet<BoardCandidate>();
 
-        //Creates a BoardCandidate per column.
-        for(int i=0;i<7;i++){
-            if(!board[0][i].isPlayed()){
-                decisionTree.add(new BoardCandidate(board,i,Connect4Cell.getTurnIn(turn)));
-            }
-        }
-         
-        logger.info("Decided:"+decisionTree.last().getColumn());
+        CellStatus player = CellStatus.PURPLEIN;
+        DecisionTreeNode<BoardCandidate> decisionNodes = null;
+
+        decisionNodes=buildTreeByLevel(0,level,null,player);
+                        
+        System.out.println(decisionNodes);
+        //logger.info("Decided:"+decisionTree.last().getColumn());
         
         //returns the Max graded option column
-        return decisionTree.last().getColumn();
+        return decisionNodes.getColumnToPlay(level);
+    }
+    
+    private DecisionTreeNode<BoardCandidate> buildTreeByLevel(int level, int maxLevel, DecisionTreeNode<BoardCandidate> parentDecisionNode, CellStatus player){                
+        
+        if(parentDecisionNode ==null){
+            parentDecisionNode = new DecisionTreeNode<BoardCandidate>(-1,CellStatus.PURPLEIN,null);
+        }
+        
+        DecisionTreeNode<BoardCandidate> decisionNode = null;
+        for(int i=0;i<7;i++){
+            if( (level==0 && !board[0][i].isPlayed()) ||
+                  (level!=0 && !parentDecisionNode.isColumnPlayed(i))){
+
+                decisionNode = new DecisionTreeNode<BoardCandidate>(level, player, parentDecisionNode);
+
+                BoardCandidate temp = null;
+
+                if(level==0){
+                    temp = new BoardCandidate(board,i,player);
+                } else {
+                    temp = new BoardCandidate(parentDecisionNode.getCandidate().getBoard(),i,player);
+                }                    
+
+                decisionNode.add(temp);
+                parentDecisionNode.addChild(decisionNode);
+                if(level+1<maxLevel){
+                    buildTreeByLevel(level+1,maxLevel,decisionNode,player==CellStatus.PURPLEIN ? CellStatus.REDIN : CellStatus.PURPLEIN);
+                }
+            }
+        }            
+        
+        return parentDecisionNode;
     }
     
     /**Select a Math.random option
